@@ -71,13 +71,12 @@ func interpret(c []byte) []byte {
 			case byte('['):
 				p = append(p, i)
 			case byte(']'):
-				bm[i] = p[len(p)-1]
+				x := p[len(p)-1]
 				p = p[:len(p)-1]
-			}
-		}
 
-		for k, v := range bm {
-			bm[v] = k
+				bm[i] = x
+				bm[x] = i
+			}
 		}
 	}
 
@@ -92,7 +91,7 @@ func interpret(c []byte) []byte {
 		case byte('<'):
 			if i == 0 {
 				a = append([]int{0}, a...)
-				break
+				continue
 			}
 
 			i--
@@ -114,7 +113,7 @@ func interpret(c []byte) []byte {
 			r := bufio.NewReader(os.Stdin)
 			bb, _ := r.ReadByte()
 
-			b = append(b, bb)
+			a[i] = int(bb)
 		case byte('['):
 			if a[i] == 0 {
 				ii = bm[ii]
