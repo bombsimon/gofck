@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -113,7 +114,12 @@ func compile(c []byte) []byte {
 		case byte('.'):
 			b = append(b, byte(a[i]))
 		case byte(','):
-			// TODO
+			fmt.Print("reading STDIN: ")
+
+			r := bufio.NewReader(os.Stdin)
+			bb, _ := r.ReadByte()
+
+			b = append(b, bb)
 		case byte('['):
 			if a[i] == 0 {
 				ii = bm[ii]
