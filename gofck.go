@@ -47,19 +47,13 @@ func main() { fmt.Println(string([]byte("%s"))) }`
 
 	fc := fmt.Sprintf(boilerPlate, ss)
 
-	fn := "tmp.go"
-	if _, err := os.Stat(fn); !os.IsNotExist(err) {
-		fmt.Printf("a file with the temporary name %s already exists, cannot continue\n", fn)
-		return
-	}
-
-	f, _ := os.Create(fn)
-	defer os.Remove(fn)
+	f, _ := ioutil.TempFile(".", "tmp*.go")
+	defer os.Remove(f.Name())
 
 	f.Write([]byte(fc))
 	f.Close()
 
-	cmd := exec.Command("go", "build", "-o", appName, "tmp.go")
+	cmd := exec.Command("go", "build", "-o", appName, f.Name())
 	cmd.Run()
 }
 
@@ -98,6 +92,7 @@ func compile(c []byte) []byte {
 		case byte('<'):
 			if i == 0 {
 				a = append([]int{0}, a...)
+				break
 			}
 
 			i--
