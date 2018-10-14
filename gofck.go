@@ -95,6 +95,10 @@ func compile(c []byte) []byte {
 
 			i++
 		case byte('<'):
+			if i == 0 {
+				a = append([]int{0}, a...)
+			}
+
 			i--
 		case byte('+'):
 			a[i]++
