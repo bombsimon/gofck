@@ -10,7 +10,7 @@ in Go. If you want to understand how Brainfuck works I recommend reading
 # Build GoFck
 go build -o gof gofck.go
 
-# Compile and execute Brainfuck code
+# Interpret and execute Brainfuck code
 ./gof <brainfuck_source.bf>
 
 # Build an executable

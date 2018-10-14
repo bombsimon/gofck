@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	out := flag.String("out", "", "name to compile to")
+	out := flag.String("out", "", "name to build to")
 	flag.Parse()
 
 	if flag.NArg() < 1 {
@@ -27,7 +27,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	r := compile(content)
+	r := interpret(content)
 
 	if *out != "" {
 		buildApp(r, *out)
@@ -57,7 +57,7 @@ func main() { fmt.Println(string([]byte("%s"))) }`
 	cmd.Run()
 }
 
-func compile(c []byte) []byte {
+func interpret(c []byte) []byte {
 	a := []int{0}
 	b := []byte{}
 	i := 0
